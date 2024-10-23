@@ -1,6 +1,7 @@
 import os
 import google.generativeai as genai
 from typing import TypedDict
+from google.ai.generativelanguage_v1beta.types import content
 
 
 class SentenceSchema(TypedDict):
@@ -37,7 +38,19 @@ class LLMService:
                 generation_config=genai.GenerationConfig(
                     temperature=0.2,
                     response_mime_type="application/json",
-                    # response_schema=schema,
+                    response_schema=content.Schema(
+                        type=content.Type.OBJECT,
+                        enum="[]",
+                        required="['subject', 'predicate']",
+                        properties={
+                            "subject": content.Schema(
+                                type=content.Type.STRING,
+                            ),
+                            "predicate": content.Schema(
+                                type=content.Type.STRING,
+                            ),
+                        },
+                    ),
                 ),
             )
         else:

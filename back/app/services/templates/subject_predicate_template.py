@@ -104,4 +104,5 @@ def subject_predicate_prompt(sentence, language):
     format_instruction = _get_format_instruction(language)
     specific_request = _get_specific_request(sentence, language)
 
+    # return f"{context}\n\n{instructions}\n\n{examples}\n\n{specific_request}"
     return f"{context}\n\n{instructions}\n\n{examples}\n\n{format_instruction}\n\n{specific_request}"
