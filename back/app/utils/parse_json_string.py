@@ -3,10 +3,12 @@ import re
 
 
 def extract_json(text):
-    # Utilizar una expresión regular para encontrar el contenido JSON entre las etiquetas ```
-    match = re.search(r"```json\n({.*?})\n```", text, re.DOTALL)
+    # Utilizar una expresión regular que busque contenido JSON entre ```json ... ```
+    # o simplemente contenido JSON independiente.
+    match = re.search(r"```json\n({.*?})\n```|({.*?})", text, re.DOTALL)
     if match:
-        json_content = match.group(1)
+        # Selecciona el grupo que tenga contenido
+        json_content = match.group(1) or match.group(2)
         try:
             # Parsear el contenido JSON
             return json.loads(json_content)
@@ -20,12 +22,20 @@ def extract_json(text):
 
 # Ejemplo de uso
 text_response = """
-```json
 {
   "sujeto": "Paul",
   "predicado": "Does love music?"
 }
-```
 """
+
+# text_response = """
+# ```json
+# {
+#   "sujeto": "Paul",
+#   "predicado": "Does love music"
+# }
+# ```
+# """
+
 
 print(extract_json(text_response))

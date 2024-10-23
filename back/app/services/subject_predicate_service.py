@@ -2,6 +2,8 @@ from ..src.llm_service import LLMService
 from .templates.subject_predicate_template import subject_predicate_prompt
 import json
 from ..utils.parse_json_string import extract_json
+from typing import TypedDict
+from google.ai.generativelanguage_v1beta.types import content
 
 
 class SubjectPredicateService:
@@ -21,7 +23,6 @@ class SubjectPredicateService:
         print(prompt)
         # print("language: ", language)
         print("------------------------------")
-
         # Generar la respuesta utilizando el modelo LLM
         try:
             response = self.llm_service.generate_response(prompt)

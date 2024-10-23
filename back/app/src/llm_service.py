@@ -21,7 +21,7 @@ class LLMService:
     def configure(self):
         # Configurar la API con la clave desde las variables de entorno
         # api_key = os.getenv("API_KEY")
-        api_key = "AIzaSyDwedS8QBm1GU-KopTVLD4MGjNvPUdk7v8"
+        api_key = "AIzaSyD4BSGwiJWaYRWOGezpJcwSQqSBVcmxaGI"
         if not api_key:
             raise ValueError("API_KEY environment variable not set.")
 
@@ -29,7 +29,7 @@ class LLMService:
         self.model = genai.GenerativeModel("gemini-1.5-pro")
 
     def generate_response(self, prompt, schema=None):
-        schema = SentenceSchema()
+        # schema = SentenceSchema()
         # Método para generar la respuesta usando Gemini
         print(prompt)
         if schema:
