@@ -26,7 +26,7 @@ class SubjectPredicateService:
             response = self.llm_service.generate_response(prompt)
             print("------------RESPONSE------------------")
 
-            print(response._result)
+            print(response.text)
             print("------------------------------")
 
             # Extraer el contenido JSON del primer candidato
@@ -41,4 +41,5 @@ class SubjectPredicateService:
                 "response": response_data,
             }
         except Exception as e:
+            print(e)
             return {"sentence": sentence, "language": language, "error": str(e)}

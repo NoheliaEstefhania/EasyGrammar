@@ -20,7 +20,7 @@ class LLMService:
     def configure(self):
         # Configurar la API con la clave desde las variables de entorno
         # api_key = os.getenv("API_KEY")
-        api_key = "AIzaSyDjSg7A-NO-p5BCy9yQj_Bb-X50Na6iL50"
+        api_key = "AIzaSyDwedS8QBm1GU-KopTVLD4MGjNvPUdk7v8"
         if not api_key:
             raise ValueError("API_KEY environment variable not set.")
 

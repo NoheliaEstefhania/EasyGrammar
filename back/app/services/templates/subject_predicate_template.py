@@ -75,7 +75,13 @@ def _get_examples(language):
 
 def _get_format_instruction(language):
     if language == "en":
-        return "Please return the result in JSON format as shown in the example above."
+        # return "Please return the result in JSON format as shown in the example above."
+        return """
+Use this JSON schema:
+
+Recipe = {'subject': str, 'predicate': str}
+Return: Recipe"""
+
     elif language == "es":
         return "Por favor, devuelve el resultado en formato JSON como se muestra en el ejemplo anterior."
     else:
