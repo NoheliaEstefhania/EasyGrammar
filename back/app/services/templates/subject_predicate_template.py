@@ -105,4 +105,46 @@ def subject_predicate_prompt(sentence, language):
     specific_request = _get_specific_request(sentence, language)
 
     # return f"{context}\n\n{instructions}\n\n{examples}\n\n{specific_request}"
-    return f"{context}\n\n{instructions}\n\n{examples}\n\n{format_instruction}\n\n{specific_request}"
+    # return f"{context}\n\n{instructions}\n\n{examples}\n\n{format_instruction}\n\n{specific_request}"
+
+    return f"""
+Contexto
+Quiero que analice una oración e identifique sus dos partes principales: el sujeto y el predicado. Esta tarea implica reconocer los componentes principales de una oración, proporcionando claridad sobre de qué trata la oración y qué acción describe.
+
+Instrucciones
+1. El **sujeto** debe captar quién o qué es el tema de la oración. Normalmente contiene el sustantivo o pronombre que actúa como el tema o el ejecutor de la acción.
+
+2. El **predicado** debe incluir todo lo demás que describa la acción o proporcione información adicional sobre el sujeto. Normalmente comienza con el verbo principal y puede incluir objetos, complementos o modificadores.
+
+Ejemplos
+En inglés, el sujeto casi siempre se menciona (sujeto expreso), pero a veces puede ser tácito (implícito). Esto ocurre principalmente en oraciones imperativas (órdenes o instrucciones), donde el sujeto "you" no se menciona, pero está implícito. Ejemplo:
+- Oración: 'Close the door!'
+- Resultado:
+  {{
+    "sujeto": "you (tacito)",
+    "predicado": "Close the door!"
+  }}
+
+A veces, partes del predicado pueden parecer sujetos, pero en realidad son complementos. Por eso, asegúrate de que lo que has identificado como sujeto es realmente quien realiza la acción del verbo. Ejemplo:
+- Oración: 'The boy with the red hat reads a book.'
+- Resultado:
+  {{
+    "sujeto": "The boy (quien realiza la acción).",
+    "predicado": "reads a book (acción + complemento)."
+  }}
+
+El sujeto es la palabra o conjunto de palabras que indican quién realiza la acción del verbo. En oraciones simples, generalmente es un sustantivo o pronombre. Ejemplo:
+- Oración: 'She eats breakfast.'
+- Resultado:
+  {{
+    "sujeto": "She",
+    "predicado": "eats breakfast (acción + complemento)."
+  }}
+
+Formato
+Por favor, devuelve el resultado en formato JSON como se muestra en el ejemplo anterior.
+
+Instrucción Final
+Ahora, por favor, realiza la tarea para la siguiente oración:
+- Oración: '{sentence}'
+"""
