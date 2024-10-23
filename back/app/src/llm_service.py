@@ -1,5 +1,11 @@
 import os
 import google.generativeai as genai
+from typing import TypedDict
+
+
+class SentenceSchema(TypedDict):
+    subject: str
+    predicate: str
 
 
 class LLMService:
@@ -22,14 +28,16 @@ class LLMService:
         self.model = genai.GenerativeModel("gemini-1.5-pro")
 
     def generate_response(self, prompt, schema=None):
+        schema = SentenceSchema()
         # Método para generar la respuesta usando Gemini
+        print(prompt)
         if schema:
             return self.model.generate_content(
                 prompt,
                 generation_config=genai.GenerationConfig(
                     temperature=0.2,
                     response_mime_type="application/json",
-                    response_schema=schema,
+                    # response_schema=schema,
                 ),
             )
         else:
