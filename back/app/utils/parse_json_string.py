@@ -1,39 +1,31 @@
-import re
 import json
+import re
 
 
-def parse_json_string(json_string: str) -> dict:
-    # Usar una expresión regular para extraer el contenido entre las llaves {}
-    match = re.search(r"\{(.*?)\}", json_string)
+def extract_json(text):
+    # Utilizar una expresión regular para encontrar el contenido JSON entre las etiquetas ```
+    match = re.search(r"```json\n({.*?})\n```", text, re.DOTALL)
     if match:
-        content = match.group(1)  # Captura el contenido entre las llaves
-        # Divide el contenido en líneas para procesarlo
-        items = content.split(",")
-        json_dict = {}
-
-        for item in items:
-            # Limpiar y dividir en clave y valor
-            key_value = item.split(":")
-            key = key_value[0].strip().strip('"')  # Limpiar y quitar comillas
-            value = key_value[1].strip().strip('"')  # Limpiar y quitar comillas
-            json_dict[key] = value
-
-        return json_dict
+        json_content = match.group(1)
+        try:
+            # Parsear el contenido JSON
+            return json.loads(json_content)
+        except json.JSONDecodeError:
+            print("Error: No se pudo decodificar el JSON.")
+            return None
     else:
-        raise ValueError("No se encontró un objeto JSON válido.")
+        print("Error: No se encontró contenido JSON en el texto.")
+        return None
 
 
 # Ejemplo de uso
-json_input = """
+text_response = """
 ```json
 {
-"subject": "he",
-"predicate": "Does kiss his girlfriend?"
+  "sujeto": "Paul",
+  "predicado": "Does love music?"
 }
 ```
 """
-result = parse_json_string(json_input)
 
-# Convertir el diccionario a JSON
-result_json = json.dumps(result, indent=4)
-print(result_json)
+print(extract_json(text_response))

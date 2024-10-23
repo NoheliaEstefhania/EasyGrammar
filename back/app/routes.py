@@ -18,7 +18,7 @@ subject_predicate_service = SubjectPredicateService()  # Instancia del nuevo ser
 
 @api.route("/", methods=["GET"])
 def isLife():
-    return "live"
+    return "Esta vivooooo"
 
 
 @api.route("/api/split-sentence", methods=["POST"])

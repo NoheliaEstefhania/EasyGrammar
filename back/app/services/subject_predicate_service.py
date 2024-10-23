@@ -1,6 +1,7 @@
 from ..src.llm_service import LLMService
 from .templates.subject_predicate_template import subject_predicate_prompt
 import json
+from ..utils.parse_json_string import extract_json
 
 
 class SubjectPredicateService:
@@ -26,7 +27,9 @@ class SubjectPredicateService:
             response = self.llm_service.generate_response(prompt)
             print("------------RESPONSE------------------")
 
-            print(response.text)
+            respondeJson_text = response._result.candidates[0].content.parts[0].text
+            print(respondeJson_text, end="")
+
             print("------------------------------")
 
             # Extraer el contenido JSON del primer candidato
@@ -34,7 +37,7 @@ class SubjectPredicateService:
             # json_text = response.result.candidates[0].content.parts[0].text
 
             # Intenta analizar el contenido como JSON
-            response_data = json.loads(response.text)
+            response_data = extract_json(respondeJson_text)
             return {
                 "sentence": sentence,
                 "language": language,
