@@ -1,5 +1,18 @@
 <script setup>
 import App1 from './components/App1.vue'
+import { ref } from 'vue';
+const showApp1 = ref(true);
+const showApp2 = ref(false);
+
+const toggleApp1 = () => {
+  showApp1.value =  !showApp1.value;
+};
+
+const toggleApp2 = () => {
+  showApp1.value = false;
+  showApp2.value = true;
+};
+
 </script>
 
 <template>
@@ -8,6 +21,11 @@ import App1 from './components/App1.vue'
       <!-- Logo img here -->
       <h1 class="text-3xl font-bold">遊 WordWeaver</h1>
     </div>
+
+    <ul class="text-xl font-bold flex flex-row gap-4">
+      <li ><a  @click="toggleApp1" href="#">App 1</a></li>
+      <li><a @click="toggleApp2" href="#">App 2</a></li>
+    </ul>
     <div class="flex flex-row gap-3">
       <button>
         <img class="w-8" src="./assets/icons/notification-icon.svg" alt="notification">
@@ -20,14 +38,8 @@ import App1 from './components/App1.vue'
   <!-- Convert to component -->
   
   <main class="px-14 py-10">
-    <App1/>
+    <App1 v-if="showApp1"/>
   </main>
-
-  
-
-
-
-
 
   <!-- Background Images -->
   <img src="./assets/imgs/sun-img.png" class="absolute top-0 left-0 -z-10"   alt="leaft">

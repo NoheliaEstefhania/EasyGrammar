@@ -50,13 +50,13 @@
         </button>
       </div>
       <div class="col-start-4 row-start-3 flex justify-center">
-        <button @click="showDivs_2" v-if="genlvl_0"
+        <button @click="showDivs_2" v-if="genlvl_0 && showlvl_1"
           class="w-24 border-2 border-black rounded-xl bg-[#FFB54A] transition-transform duration-200 active:translate-y-[-10px]">
           Nivel 2
         </button>
       </div>
       <div class="col-start-4 row-start-4 flex justify-center">
-        <button @click="showDivs_3" v-if="genlvl_0"
+        <button @click="showDivs_3"  v-if="genlvl_0 && showlvl_1 && showlvl_2"
           class="w-24 border-2 border-black rounded-xl bg-[#FF7B4D] transition-transform duration-200 active:translate-y-[-10px]">
           Nivel 3
         </button>
