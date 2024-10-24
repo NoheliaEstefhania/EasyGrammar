@@ -1,12 +1,7 @@
 import os
 import google.generativeai as genai
-from typing import TypedDict
+from typing import Dict, Any
 from google.ai.generativelanguage_v1beta.types import content
-
-
-class SentenceSchema(TypedDict):
-    subject: str
-    predicate: str
 
 
 class LLMService:
@@ -28,29 +23,24 @@ class LLMService:
         genai.configure(api_key=api_key)
         self.model = genai.GenerativeModel("gemini-1.5-pro")
 
-    def generate_response(self, prompt, schema=None):
-        # schema = SentenceSchema()
+    def generate_response(self, prompt: str, schema: Dict[str, Any] = None):
         # Método para generar la respuesta usando Gemini
         print(prompt)
         if schema:
+            # Construir la configuración del esquema dinámicamente
+            response_schema = content.Schema(
+                type=content.Type.OBJECT,
+                properties=schema.get("properties", {}),
+                required=schema.get("required", []),
+                enum=schema.get("enum", []),
+            )
+
             return self.model.generate_content(
                 prompt,
                 generation_config=genai.GenerationConfig(
                     temperature=0.2,
                     response_mime_type="application/json",
-                    response_schema=content.Schema(
-                        type=content.Type.OBJECT,
-                        enum="[]",
-                        required="['subject', 'predicate']",
-                        properties={
-                            "subject": content.Schema(
-                                type=content.Type.STRING,
-                            ),
-                            "predicate": content.Schema(
-                                type=content.Type.STRING,
-                            ),
-                        },
-                    ),
+                    response_schema=response_schema,
                 ),
             )
         else:

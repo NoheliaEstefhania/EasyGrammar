@@ -24,8 +24,22 @@ class SubjectPredicateService:
         # print("language: ", language)
         print("------------------------------")
         # Generar la respuesta utilizando el modelo LLM
+
+        schema = {
+            "properties": {
+                "subject": content.Schema(
+                    type=content.Type.STRING,
+                ),
+                "predicate": content.Schema(
+                    type=content.Type.STRING,
+                ),
+            },
+            "required": ["subject", "predicate"],
+            "enum": [],
+        }
+
         try:
-            response = self.llm_service.generate_response(prompt)
+            response = self.llm_service.generate_response(prompt, schema)
             print("------------RESPONSE------------------")
 
             respondeJson_text = response._result.candidates[0].content.parts[0].text
